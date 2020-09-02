@@ -115,7 +115,9 @@ const data = [
   Refresh the page to see the new article.
 */
 
-const articleMaker = details => {
+//create the component
+const articleMaker = (articleInfo) => {
+  //create the elements
   const article = document.createElement('div');
   const articleTitle = document.createElement('h2');
   const articleDate = document.createElement('p');
@@ -126,69 +128,60 @@ const articleMaker = details => {
   const expand = document.createElement('span');
   const close = document.createElement('button');
 
+  //create and add the classes
   article.className = 'article';
   articleDate.className = 'date';
   expand.className = 'expandButton';
-  close.className = 'close';
+  close.className = 'close'; // stretch goal
 
+  //expand the article
   expand.addEventListener('click', () => {
-    expand.textContent =
-      expand.textContent === 'Click to Expand' ? 'Click to Close' : 'Click to Expand';
     article.classList.toggle('article-open');
   });
 
+  //remove the article - stretch goal
   close.addEventListener('click', () => {
     articles.removeChild(article);
   });
 
+  //append the article to its proper parent
   article.append(articleTitle);
   article.append(articleDate);
   article.append(p1);
   article.append(p2);
   article.append(p3);
   article.append(expand);
-  article.append(close);
+  article.append(close); // stretch goal
 
-  articleTitle.textContent = details.title;
-  articleDate.textContent = details.date;
-  p1.textContent = details.firstParagraph;
-  p2.textContent = details.secondParagraph;
-  p3.textContent = details.thirdParagraph;
-  expand.textContent = 'Click to Expand';
-  close.textContent = 'x';
+  //add text to article
+  articleTitle.textContent = articleInfo.title;
+  articleDate.textContent = articleInfo.date;
+  p1.textContent = articleInfo.firstParagraph;
+  p2.textContent = articleInfo.secondParagraph;
+  p3.textContent = articleInfo.thirdParagraph;
+  expand.textContent = 'Expand / Collapse'; 
+  close.textContent = 'Close Me'; // stretch goal
 
   return article;
 };
 
+const newArticle = { // adding new data
+  title: 'BIG NEWS: I just finished the article section of this project!',
+  date: 'Sep 2nd, 2020',
+  firstParagraph: 'I had my doubts on whether or not I was going to complete this assignment',
+  secondParagraph: 'After hours of debugging and problem solving I finally got to step 5',
+  thirdParagraph: 'Sadly - we still have more to do! Onwards to the menu!',
+}
+
+data.push(newArticle)
+
+//target articles to append data
 const articles = document.querySelector('.articles');
 
+//loop through data array and append the information to articles
 data.map(item => {
   const article = articleMaker(item);
   articles.append(article);
   return article;
 });
 
-const addArticle = () => {
-  const title = prompt('Title:', '');
-  const date = prompt('Date:', '');
-  const firstParagraph = prompt('First Paragraph:', '');
-  const secondParagraph = prompt('Second Paragraph:', '');
-  const thirdParagraph = prompt('Third Paragraph:', '');
-  const article = articleMaker({
-    title,
-    date,
-    firstParagraph,
-    secondParagraph,
-    thirdParagraph,
-  });
-  articles.append(article);
-  return article;
-};
-
-const addButton = document.createElement('button');
-addButton.className = 'add-btn';
-addButton.addEventListener('click', addArticle);
-addButton.textContent = 'Add';
-
-const page = document.querySelector('body');
-page.append(addButton);
