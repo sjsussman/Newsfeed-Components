@@ -114,3 +114,81 @@ const data = [
   Step 5: Try adding new article object to the data array. Make sure it is in the same format as the others.
   Refresh the page to see the new article.
 */
+
+const articleMaker = details => {
+  const article = document.createElement('div');
+  const articleTitle = document.createElement('h2');
+  const articleDate = document.createElement('p');
+  const p1 = document.createElement('p');
+  const p2 = document.createElement('p');
+  const p3 = document.createElement('p');
+
+  const expand = document.createElement('span');
+  const close = document.createElement('button');
+
+  article.className = 'article';
+  articleDate.className = 'date';
+  expand.className = 'expandButton';
+  close.className = 'close';
+
+  expand.addEventListener('click', () => {
+    expand.textContent =
+      expand.textContent === 'Click to Expand' ? 'Click to Close' : 'Click to Expand';
+    article.classList.toggle('article-open');
+  });
+
+  close.addEventListener('click', () => {
+    articles.removeChild(article);
+  });
+
+  article.append(articleTitle);
+  article.append(articleDate);
+  article.append(p1);
+  article.append(p2);
+  article.append(p3);
+  article.append(expand);
+  article.append(close);
+
+  articleTitle.textContent = details.title;
+  articleDate.textContent = details.date;
+  p1.textContent = details.firstParagraph;
+  p2.textContent = details.secondParagraph;
+  p3.textContent = details.thirdParagraph;
+  expand.textContent = 'Click to Expand';
+  close.textContent = 'x';
+
+  return article;
+};
+
+const articles = document.querySelector('.articles');
+
+data.map(item => {
+  const article = articleMaker(item);
+  articles.append(article);
+  return article;
+});
+
+const addArticle = () => {
+  const title = prompt('Title:', '');
+  const date = prompt('Date:', '');
+  const firstParagraph = prompt('First Paragraph:', '');
+  const secondParagraph = prompt('Second Paragraph:', '');
+  const thirdParagraph = prompt('Third Paragraph:', '');
+  const article = articleMaker({
+    title,
+    date,
+    firstParagraph,
+    secondParagraph,
+    thirdParagraph,
+  });
+  articles.append(article);
+  return article;
+};
+
+const addButton = document.createElement('button');
+addButton.className = 'add-btn';
+addButton.addEventListener('click', addArticle);
+addButton.textContent = 'Add';
+
+const page = document.querySelector('body');
+page.append(addButton);
