@@ -31,24 +31,32 @@ let menuItems = [
 
   Step 6: Use 'menuMaker' to create a menu using the 'menuItems' array, and append the returned menu to the header.
 */
-
-const createMenuButtons = item => {
+//creating the list items
+const createListItems = (item) => {
   const menuButton = document.createElement('li');
   menuButton.textContent = item;
   return menuButton;
 };
 
-const menuMaker = items => {
+//creating the menu maker component
+const menuMaker = (items) => {
+
+  //create the div & assign it the menu class
   const menu = document.createElement('div');
   menu.className = 'menu';
 
+  //create unordered list (UL)
   const menuItems = document.createElement('ul');
-  const menuButtons = items.map(createMenuButtons);
+
+  
+  const menuButtons = items.map(createListItems);
 
   menu.append(menuItems);
   menuItems.append(...menuButtons);
+
   return menu;
 };
+
 
 const menu = menuMaker(menuItems);
 
@@ -58,8 +66,5 @@ body.append(menu);
 const menuButton = document.querySelector('.menu-button');
 menuButton.addEventListener('click', () => menu.classList.toggle('menu--open'));
 
-const content = document.querySelector('.articles');
-content.addEventListener('click', () => menu.classList.remove('menu--open'));
-
-
+//menu animation
 gsap.to(".menu-button", {duration: 3, rotation: 360, scale: 0.5, repeat: -1, repeatDelay: 3});
