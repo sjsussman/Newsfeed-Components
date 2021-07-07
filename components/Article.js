@@ -114,3 +114,74 @@ const data = [
   Step 5: Try adding new article object to the data array. Make sure it is in the same format as the others.
   Refresh the page to see the new article.
 */
+
+//create the component
+const articleMaker = (articleInfo) => {
+  //create the elements
+  const article = document.createElement('div');
+  const articleTitle = document.createElement('h2');
+  const articleDate = document.createElement('p');
+  const p1 = document.createElement('p');
+  const p2 = document.createElement('p');
+  const p3 = document.createElement('p');
+
+  const expand = document.createElement('span');
+  const close = document.createElement('button');
+
+  //create and add the classes
+  article.className = 'article';
+  articleDate.className = 'date';
+  expand.className = 'expandButton';
+  close.className = 'close'; // stretch goal
+
+  //expand the article
+  expand.addEventListener('click', () => {
+    article.classList.toggle('article-open');
+  });
+
+  //remove the article - stretch goal
+  close.addEventListener('click', () => {
+    articles.removeChild(article);
+  });
+
+  //append the article to its proper parent
+  article.append(articleTitle);
+  article.append(articleDate);
+  article.append(p1);
+  article.append(p2);
+  article.append(p3);
+  article.append(expand);
+  article.append(close); // stretch goal
+
+  //add text to article
+  articleTitle.textContent = articleInfo.title;
+  articleDate.textContent = articleInfo.date;
+  p1.textContent = articleInfo.firstParagraph;
+  p2.textContent = articleInfo.secondParagraph;
+  p3.textContent = articleInfo.thirdParagraph;
+  expand.textContent = 'Expand / Collapse'; 
+  close.textContent = 'Close Me'; // stretch goal
+
+  return article;
+};
+
+const newArticle = { // adding new data
+  title: 'BIG NEWS: I just finished the article section of this project!',
+  date: 'Sep 2nd, 2020',
+  firstParagraph: 'I had my doubts on whether or not I was going to complete this assignment',
+  secondParagraph: 'After hours of debugging and problem solving I finally got to step 5',
+  thirdParagraph: 'Sadly - we still have more to do! Onwards to the menu!',
+}
+
+data.push(newArticle)
+
+//target articles to append data
+const articles = document.querySelector('.articles');
+
+//loop through data array and append the information to articles
+data.map(item => {
+  const article = articleMaker(item);
+  articles.append(article);
+  return article;
+});
+
